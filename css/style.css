@@ -1999,7 +1999,7 @@ textarea.w-select {
   --_typography---font-size--10x-large: 7.5em;
   --_typography---font-size--8x-large: 5em;
   --_typography---font-weight--x-light: 200;
-  --_theme---link-colors--arrow-link-text: var(--_theme---neutral-colors--neutral-600);
+  --_theme---link-colors--arrow-link-text: blue;
   --sizes--8x-large: 6em;
   --_theme---layers--light-10: #f3f1ec1a;
   --border-radius--footer-bg: 0rem;
@@ -2203,7 +2203,7 @@ figure {
   --_theme---background-colors--secondary: var(--_theme---accent-colors--carbon-900);
   --_theme---text-colors--brand: var(--_theme---brand-colors--brand-500);
   --_theme---border-colors--brand: var(--_theme---brand-colors--brand-500);
-  --_theme---link-colors--arrow-link-text: var(--_theme---neutral-colors--neutral-600);
+  --_theme---link-colors--arrow-link-text: blue;
   --_theme---layers--light-10: #f3f1ec1a;
   --_theme---link-colors--footer-text: var(--_theme---neutral-colors--neutral-800);
   --_theme---neutral-colors--neutral-700: #83847d;
@@ -2675,7 +2675,7 @@ figure {
   --_theme---background-colors--secondary: var(--_theme---neutral-colors--neutral-200);
   --_theme---text-colors--brand: var(--_theme---brand-colors--brand-700);
   --_theme---border-colors--brand: var(--_theme---brand-colors--brand-700);
-  --_theme---link-colors--arrow-link-text: var(--_theme---neutral-colors--neutral-600);
+  --_theme---link-colors--arrow-link-text: blue;
   --_theme---layers--light-10: #f3f1ec1a;
   --_theme---link-colors--footer-text: var(--_theme---neutral-colors--neutral-100);
   --_theme---neutral-colors--neutral-700: #83847d;
@@ -3704,7 +3704,7 @@ figure {
   grid-column-gap: var(--sizes--x-small);
   grid-row-gap: var(--sizes--x-small);
   font-family: var(--_typography---font-family--secondary);
-  color: var(--_theme---link-colors--arrow-link-text);
+  color: blue;
   text-transform: uppercase;
   justify-content: flex-start;
   align-items: center;
@@ -3735,7 +3735,9 @@ figure {
 .arrow-link_text {
   font-size: var(--_typography---font-size--2x-small);
   line-height: var(--_typography---line-height--140);
-  letter-spacing: var(--_typography---letter-spacing--6x-wide)
+  letter-spacing: var(--_typography---letter-spacing--6x-wide);
+  color: #0082f3;
+
 }
 
 .news_grid {
@@ -3920,6 +3922,9 @@ figure {
   line-height: var(--_typography---line-height--110);
   font-weight: var(--_typography---font-weight--normal)
 }
+
+.news_list-card-arrow { color: var(--st-muted) !important; transition: color .2s ease; }
+.news_list-card:hover .news_list-card-arrow { color: var(--st-blue-dark) !important; }
 
 .footer_content {
   padding-top: var(--padding-horizontal--main);
