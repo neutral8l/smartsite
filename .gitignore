@@ -1,0 +1,27 @@
+# Файлы и папки, которые НЕ нужно загружать на сервер.
+# На сервер идут: *.html в корне, css/, js/, img/, video/, documents/ (и fonts/, если есть).
+
+# Исходники сборки (страницы собираются из src/ командой build.py)
+src/
+build.py
+fetch_assets.py
+
+# Сжатая версия страниц (если нужна — берите оттуда html вручную)
+dist/
+
+# Резервные копии, которые делает fetch_assets.py
+*.original.html
+
+# Документация
+README.txt
+
+# Служебное
+__pycache__/
+*.pyc
+node_modules/
+*.zip
+*.7z
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
