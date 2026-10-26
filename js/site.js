@@ -339,3 +339,96 @@ setTimeout(function () {
     true,
   );
 })();
+
+// Магнитный эффект: пункты верхнего меню притягиваются к курсору,
+// а текст внутри смещается чуть сильнее (параллакс). Кнопка «Связаться с нами» не участвует.
+(function () {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var STRENGTH = 0.35, // насколько элемент тянется за курсором
+    INNER = 0.6, // доп. смещение содержимого относительно элемента
+    RANGE = 40, // зона притяжения вокруг элемента, px
+    EASE = 0.15; // плавность (меньше — мягче)
+
+  var items = Array.prototype.slice
+    .call(document.querySelectorAll(".nav_link"))
+    .map(function (el) {
+      var inner = el.querySelector(".nav_link-text-col");
+      // у «Контакты» рядом индикатор подменю: ограничиваем смещение, чтобы ссылка его не перекрывала
+      // и сужаем зону притяжения, чтобы наведение на индикатор не запускало магнит
+      var drop = !!el.closest(".nav_dropdown");
+      return {
+        el: el,
+        inner: inner,
+        max: drop ? 4 : Infinity,
+        range: drop ? 6 : RANGE,
+        x: 0,
+        y: 0,
+        tx: 0,
+        ty: 0,
+      };
+    });
+  if (!items.length) return;
+
+  function clamp(v, m) {
+    return Math.max(-m, Math.min(m, v));
+  }
+
+  var mouse = null,
+    running = false;
+
+  window.addEventListener(
+    "mousemove",
+    function (e) {
+      mouse = { x: e.clientX, y: e.clientY };
+      items.forEach(function (it) {
+        var r = it.el.getBoundingClientRect();
+        // исходный центр без учёта текущего смещения, чтобы не было дрожания
+        var cx = r.left + r.width / 2 - it.x,
+          cy = r.top + r.height / 2 - it.y;
+        var inside =
+          mouse.x > cx - r.width / 2 - it.range &&
+          mouse.x < cx + r.width / 2 + it.range &&
+          mouse.y > cy - r.height / 2 - it.range &&
+          mouse.y < cy + r.height / 2 + it.range;
+        it.tx = inside ? clamp((mouse.x - cx) * STRENGTH, it.max) : 0;
+        it.ty = inside ? clamp((mouse.y - cy) * STRENGTH, it.max) : 0;
+      });
+      if (!running) {
+        running = true;
+        requestAnimationFrame(tick);
+      }
+    },
+    { passive: true },
+  );
+  document.addEventListener("mouseleave", function () {
+    items.forEach(function (it) {
+      it.tx = it.ty = 0;
+    });
+    if (!running) {
+      running = true;
+      requestAnimationFrame(tick);
+    }
+  });
+
+  function tick() {
+    var moving = false;
+    items.forEach(function (it) {
+      it.x += (it.tx - it.x) * EASE;
+      it.y += (it.ty - it.y) * EASE;
+      if (Math.abs(it.tx - it.x) < 0.05 && Math.abs(it.ty - it.y) < 0.05) {
+        it.x = it.tx;
+        it.y = it.ty;
+      } else {
+        moving = true;
+      }
+      it.el.style.translate = it.x.toFixed(2) + "px " + it.y.toFixed(2) + "px";
+      if (it.inner)
+        it.inner.style.translate =
+          (it.x * INNER).toFixed(2) + "px " + (it.y * INNER).toFixed(2) + "px";
+    });
+    if (moving) requestAnimationFrame(tick);
+    else running = false;
+  }
+})();
