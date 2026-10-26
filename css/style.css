@@ -8177,8 +8177,8 @@ a:hover .card_action-arrow,
   transition: width .3s ease, height .3s ease, border-radius .3s ease;
 }
 
-.nav_dropdown:hover .nav_dropdown-ch::before,
-.nav_dropdown:has(.mega_wrapper:not(.hide)) .nav_dropdown-ch::before {
+.st-dropdown:hover .nav_dropdown-ch::before,
+.st-dropdown.is-open .nav_dropdown-ch::before {
   width: 20px;
   height: 2px;
   border-radius: 1px;
@@ -8187,3 +8187,86 @@ a:hover .card_action-arrow,
 /* Пункт меню текущей страницы — синий */
 .nav_link.is-current .nav_link-text,
 .nav_link.w--current .nav_link-text { color: var(--st-blue) !important; }
+
+.st-dropdown:hover .nav_dropdown-ch::before,
+
+/* ===== Выпадающее меню «Контакты» =====
+   Раньше им управляла анимация Webflow по классу nav_dropdown, и после быстрого ухода/возврата курсора меню
+   иногда оставалось скрытым. Теперь класс другой (st-dropdown): открытием управляют CSS и js/site.js. */
+.st-dropdown {
+  cursor: pointer;
+  flex-flow: column;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+  display: flex;
+}
+
+.st-dropdown .mega_wrapper {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear .3s;
+}
+
+.st-dropdown.is-open .mega_wrapper {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.st-dropdown .mega_component {
+  opacity: 0;
+  transform: translateY(-.75em);
+  transition: opacity .24s ease, transform .36s cubic-bezier(.22, 1, .36, 1);
+}
+
+.st-dropdown.is-open .mega_component {
+  opacity: 1;
+  transform: none;
+}
+
+.st-dropdown .mega_bg {
+  transform: scaleY(0);
+  transition: transform .36s cubic-bezier(.22, 1, .36, 1);
+}
+
+.st-dropdown.is-open .mega_bg {
+  transform: scaleY(1);
+}
+
+.st-dropdown [data-slide="coll-item"] {
+  opacity: 0;
+  transform: translateY(.5em);
+  transition: opacity .24s ease, transform .36s cubic-bezier(.22, 1, .36, 1);
+}
+
+.st-dropdown.is-open [data-slide="coll-item"] {
+  opacity: 1;
+  transform: none;
+}
+
+.st-dropdown.is-open [data-slide="coll-item"]:nth-of-type(2) {
+  transition-delay: .1s;
+}
+
+.st-dropdown.is-open [data-slide="coll-item"]:nth-of-type(3) {
+  transition-delay: .16s;
+}
+
+/* затемнение страницы под открытым меню (только на десктопе; на мобильном его включает кнопка-«бургер») */
+@media (min-width: 992px) {
+  html:has(.st-dropdown.is-open) .header_scrim.hide {
+    display: block !important;
+    animation: st-scrim-in .2s ease both;
+  }
+}
+
+@keyframes st-scrim-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

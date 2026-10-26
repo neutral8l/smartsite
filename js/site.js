@@ -357,7 +357,7 @@ setTimeout(function () {
       var inner = el.querySelector(".nav_link-text-col");
       // у «Контакты» рядом индикатор подменю: ограничиваем смещение, чтобы ссылка его не перекрывала
       // и сужаем зону притяжения, чтобы наведение на индикатор не запускало магнит
-      var drop = !!el.closest(".nav_dropdown");
+      var drop = !!el.closest(".st-dropdown");
       return {
         el: el,
         inner: inner,
@@ -444,5 +444,33 @@ setTimeout(function () {
       a.classList.add("is-current");
       a.setAttribute("aria-current", "page");
     }
+  });
+})();
+
+// Выпадающее меню «Контакты»: открывается по наведению/фокусу, закрывается с небольшой задержкой (чтобы не мигало).
+(function () {
+  var dd = document.querySelector(".st-dropdown");
+  if (!dd) return;
+  var timer;
+  function open() {
+    clearTimeout(timer);
+    dd.classList.add("is-open");
+  }
+  function close(delay) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      dd.classList.remove("is-open");
+    }, delay);
+  }
+  dd.addEventListener("mouseenter", open);
+  dd.addEventListener("mouseleave", function () {
+    close(120);
+  });
+  dd.addEventListener("focusin", open);
+  dd.addEventListener("focusout", function (e) {
+    if (!dd.contains(e.relatedTarget)) close(0);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") close(0);
   });
 })();
