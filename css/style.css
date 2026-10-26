@@ -1748,7 +1748,7 @@ textarea.w-select {
   float: right;
   cursor: pointer;
   -webkit-tap-highlight-color: #0000;
-  tap-highlight-color: #0000;
+  -tap-highlight-color: #0000;
   -webkit-user-select: none;
   user-select: none;
   padding: 18px;
@@ -4975,7 +4975,7 @@ figure {
 .mega_item-arrow {
   aspect-ratio: 1;
   width: .9em;
-  color: var(--_theme---text-colors--brand);
+  color: blue;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -4987,7 +4987,7 @@ figure {
   top: var(--sizes--zero);
   bottom: var(--sizes--zero);
   width: var(--border-stroke--main);
-  background-color: var(--_theme---border-colors--brand);
+  background-color: blue;
   position: absolute
 }
 
@@ -8128,7 +8128,7 @@ a:hover .card_action-arrow,
 }
 
 .is-project .hero_media-veil {
-  background: linear-gradient(180deg, rgba(10, 18, 36, .45) 0%, rgba(10, 18, 36, .8) 100%) !important;
+  background: linear-gradient(180deg, rgba(254, 254, 255, 0.45) 0%, rgba(21, 69, 180, 0.8) 100%) !important;
 }
 
 /* Кнопка «Связаться с нами»: при наведении фон чёрный, текст и стрелка синие */
