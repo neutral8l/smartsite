@@ -432,3 +432,17 @@ setTimeout(function () {
     else running = false;
   }
 })();
+
+// Помечаем в верхнем меню пункт текущей страницы
+(function () {
+  var file = location.pathname.split("/").pop() || "index.html";
+  // страницы проектов подсвечивают пункт «Проекты»
+  if (/^project-\d+\.html$/.test(file)) file = "projects.html";
+  document.querySelectorAll(".nav_menu .nav_link").forEach(function (a) {
+    var href = (a.getAttribute("href") || "").split("#")[0];
+    if (href === file) {
+      a.classList.add("is-current");
+      a.setAttribute("aria-current", "page");
+    }
+  });
+})();

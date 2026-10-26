@@ -8044,7 +8044,7 @@ html.st-fallback.st-fallback.st-fallback.st-fallback.w-mod-js:not(.w-mod-ix3) .h
 
 /* Стрелка и напись «подробнее»: обычно приглушённая, синяя при наведении на карточку/ссылку */
 .card_action-text {
-  color: var(--st-blue) !important;
+  color: var(--st-muted) !important;
 }
 
 a:hover .card_action-text,
@@ -8183,3 +8183,7 @@ a:hover .card_action-arrow,
   height: 2px;
   border-radius: 1px;
 }
+
+/* Пункт меню текущей страницы — синий */
+.nav_link.is-current .nav_link-text,
+.nav_link.w--current .nav_link-text { color: var(--st-blue) !important; }
