@@ -8289,7 +8289,7 @@ a:hover .card_action-arrow,
     tr:nth-child(even) { background-color: #f9f9fb; }
     
     /* Эффект при наведении */
-    tr:hover { background-color: #cde0ff; }
+    tr:hover { background-color: #91a2bd; }
     
     /* Выделение колонки-лидера */
     .winner-col { background-color: #e8f4fd !important; border-left: 2px solid #3b82f6; border-right: 2px solid #3b82f6; }
@@ -8307,3 +8307,5 @@ a:hover .card_action-arrow,
         th, td { padding: 10px 5px; font-size: 14px; }
         .product-img { width: 40px; height: 40px; }
     }
+
+.footer_link-text_ne{ color: #1834d3;}
