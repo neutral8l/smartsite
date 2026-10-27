@@ -5960,6 +5960,7 @@ figure {
 
   .nav_brand-image.is-name {
     display: none
+
   }
 
   .mega_case-grid {
@@ -8309,3 +8310,9 @@ a:hover .card_action-arrow,
     }
 
 .footer_link-text_ne{ color: #2c48e7;}
+
+.responsive-iframe {
+        width: 100%;
+        height: 600px; /* Или используйте aspect-ratio для пропорций */
+        border: 1px solid #ccc;
+}
