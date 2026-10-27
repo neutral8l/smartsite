@@ -1748,7 +1748,6 @@ textarea.w-select {
   float: right;
   cursor: pointer;
   -webkit-tap-highlight-color: #0000;
-  -tap-highlight-color: #0000;
   -webkit-user-select: none;
   user-select: none;
   padding: 18px;
@@ -7417,11 +7416,12 @@ a.button_component,
   font-style: normal;
 }
 
-/* 11.8em = прежние 1180%; на узких экранах уменьшается, чтобы влезть в одну строку */
-/* Большая надпись видна наполовину: высота блока = половина высоты заглавных букв (≈0.36 от размера шрифта) + полоса снизу.
-   Хотите видеть больше/меньше — меняйте множитель .358 (≈ половина высоты заглавных). */
+/* размер надписи: 22em, но не больше 11vw — на узких экранах уменьшается, чтобы влезть в одну строку.
+   Если меняете размер здесь, поменяйте его и в .footer_big-text-box ниже (там же множитель .4 — какая часть букв видна). */
+/* Большая надпись видна наполовину: высота блока = доля размера шрифта + полоса снизу.
+   Хотите видеть больше/меньше букв — меняйте множитель .4 (больше число — видно больше). */
 .footer_big-text-box {
-  height: calc(.358 * min(11.8em, 12.2vw) + var(--st-strip)) !important;
+  height: calc(.4 * min(22em, 11vw) + var(--st-strip)) !important; /* min(22em, 11vw) — тот же размер, что у .footer_big-text */
 }
 
 .footer .text-color-primary {
@@ -8187,8 +8187,6 @@ a:hover .card_action-arrow,
 /* Пункт меню текущей страницы — синий */
 .nav_link.is-current .nav_link-text,
 .nav_link.w--current .nav_link-text { color: var(--st-blue) !important; }
-
-.st-dropdown:hover .nav_dropdown-ch::before,
 
 /* ===== Выпадающее меню «Контакты» =====
    Раньше им управляла анимация Webflow по классу nav_dropdown, и после быстрого ухода/возврата курсора меню
