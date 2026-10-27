@@ -8268,3 +8268,42 @@ a:hover .card_action-arrow,
     opacity: 1;
   }
 }
+
+.table-container { max-width: 900px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow-x: auto; }
+    
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    
+    /* Шапка */
+    th { background-color: #e0e5ec; padding: 20px 15px; text-align: center; border-bottom: 2px solid #c0c8d4; }
+    th:first-child { text-align: left; border-top-left-radius: 12px; }
+    th:last-child { border-top-right-radius: 12px; }
+    
+    /* Круглые картинки */
+    .product-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto 10px; border: 2px solid white; }
+    
+    /* Ячейки */
+    td { padding: 16px 15px; border-bottom: 1px solid #eaeaea; text-align: center; font-size: 16px; }
+    td:first-child { text-align: left; font-weight: 500; color: #333; width: 40%; }
+    
+    /* Чередование строк (Зебра) */
+    tr:nth-child(even) { background-color: #f9f9fb; }
+    
+    /* Эффект при наведении */
+    tr:hover { background-color: #cde0ff; }
+    
+    /* Выделение колонки-лидера */
+    .winner-col { background-color: #e8f4fd !important; border-left: 2px solid #3b82f6; border-right: 2px solid #3b82f6; }
+    .winner-header { position: relative; color: #1e3a8a; }
+    .badge { background: #3b82f6; color: white; font-size: 10px; padding: 3px 8px; border-radius: 10px; position: absolute; top: 5px; right: 5px; font-weight: bold; }
+
+    /* Иконки */
+    .icon-yes { color: #10b981; font-size: 24px; font-weight: bold; }
+    .icon-no { color: #ef4444; font-size: 24px; font-weight: bold; }
+    
+    /* Адаптивность для мобильных */
+    @media (max-width: 600px) {
+        .table-container { box-shadow: none; background: transparent; }
+        table { min-width: 100%; }
+        th, td { padding: 10px 5px; font-size: 14px; }
+        .product-img { width: 40px; height: 40px; }
+    }
