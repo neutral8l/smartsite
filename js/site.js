@@ -474,3 +474,119 @@ setTimeout(function () {
     if (e.key === "Escape") close(0);
   });
 })();
+
+// Форма на странице «Контакты» (Web3Forms, те же ST_CONFIG).
+(function () {
+  var form = document.getElementById("wf-form-Contact-Form");
+  if (!form) return;
+  var wrap = form.closest(".w-form");
+  var ok = wrap && wrap.querySelector(".w-form-done");
+  var fail = wrap && wrap.querySelector(".w-form-fail");
+  var btn = form.querySelector(".is-submit");
+
+  // выбор типа обращения
+  var boxes = form.querySelectorAll(".form_radio-box");
+  function pick(box) {
+    boxes.forEach(function (b) {
+      b.classList.remove("form_radio-is-focused");
+      var d = b.querySelector(".w-radio-input");
+      if (d) d.classList.remove("w--redirected-checked");
+    });
+    box.classList.add("form_radio-is-focused");
+    var d = box.querySelector(".w-radio-input");
+    if (d) d.classList.add("w--redirected-checked");
+    var r = box.querySelector("input[type=radio]");
+    if (r) r.checked = true;
+  }
+  boxes.forEach(function (b) {
+    b.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        pick(b);
+      },
+      true,
+    );
+  });
+  if (boxes[0]) pick(boxes[0]);
+
+  function val(n) {
+    var el = form.elements[n];
+    return el ? (el.value || "").trim() : "";
+  }
+
+  form.addEventListener(
+    "submit",
+    function (e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (val("website")) return; // honeypot
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      var type = (form.querySelector("input[name=Inquiry-Type]:checked") || {})
+        .value || "";
+      var name = (val("First-Name") + " " + val("Last-Name")).trim();
+      var lines = [
+        "Тип обращения: " + type,
+        "Имя: " + name,
+        "E-mail: " + val("Email"),
+        "Компания: " + val("Company-Name"),
+        "Город, страна: " + val("Business-Location"),
+        "",
+        val("Message"),
+      ].join("\n");
+
+      if (!ST_CONFIG.FORM_ENDPOINT) {
+        window.location.href =
+          "mailto:" +
+          ST_CONFIG.MAIL_TO +
+          "?subject=" +
+          encodeURIComponent("Обращение с сайта: " + type) +
+          "&body=" +
+          encodeURIComponent(lines);
+        return;
+      }
+      if (btn) btn.disabled = true;
+      fetch(ST_CONFIG.FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: ST_CONFIG.ACCESS_KEY,
+          subject: "Обращение с сайта: " + type,
+          from_name: "Сайт СМАРТТЕХНОЛОГИЯ",
+          name: name,
+          email: val("Email"),
+          "Тип обращения": type,
+          "Компания": val("Company-Name") || "—",
+          "Город, страна": val("Business-Location") || "—",
+          "Описание задачи": val("Message"),
+          message: lines,
+        }),
+      })
+        .then(function (r) {
+          return r.json().then(function (j) {
+            if (!r.ok || j.success === false) throw new Error("bad");
+          });
+        })
+        .then(function () {
+          form.reset();
+          form.style.display = "none";
+          if (ok) ok.style.display = "block";
+          if (fail) fail.style.display = "none";
+        })
+        .catch(function () {
+          if (fail) fail.style.display = "block";
+        })
+        .then(function () {
+          if (btn) btn.disabled = false;
+        });
+    },
+    true,
+  );
+})();
