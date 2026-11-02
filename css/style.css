@@ -3056,7 +3056,7 @@ figure {
 
 .spec-card_list {
   max-width: var(--container--max-width-6x-large);
-  border: var(--border-stroke--main) solid var(--_theme---border-colors--primary);
+  border: var(--border-stroke--main);
   border-radius: var(--border-radius--x-small);
   flex: 1;
   grid-template-rows: auto auto;
